@@ -28,19 +28,51 @@ const tokenize = input => {
     }
 
     if (isNumber(character)) {
+      let numberString = character;
+      
+      while(isNumber(input[++cursor])) {
+        numberString += input[cursor];
+      }
+
       tokens.push({
         type: 'Number',
-        value: parseInt(character),
+        value: parseInt(numberString),
       })
-      cursor++;
+
       continue;
     }
 
     if (isLetter(character)) {
+      let word = character;
+
+      while(isLetter(input[++cursor])) {
+        word += input[cursor];
+      }
+
       tokens.push({
         type: 'Name',
-        value: character,
+        value: word,
       });
+
+      continue;
+    }
+
+    if(isQuote(character)) {
+      let string = '';
+
+      while(!isQuote(input[++cursor])) {
+        string += input[cursor];
+      }
+
+      // Should have an error condition here for unclosed Strings.
+      // Also, all kinds of stuff, like escaping special characters etc.
+      // Screw that for now, this is an exercise.
+
+      tokens.push({
+        type: 'String',
+        value: string,
+      });
+
       cursor++;
       continue;
     }
