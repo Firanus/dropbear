@@ -56,7 +56,7 @@ describe(evaluate, () => {
     expect(evaluate(ast)).toBe(Math.PI);
   });
 
-  it.skip('should be able to determine the highest number in a range', () => {
+  it('should be able to determine the highest number in a range', () => {
     const ast = {
       type: 'CallExpression',
       name: 'max',
@@ -68,5 +68,19 @@ describe(evaluate, () => {
     };
 
     expect(evaluate(ast)).toBe(10);
+  });
+
+  it('should be able to determine the lowest number in a range', () => {
+    const ast = {
+      type: 'CallExpression',
+      name: 'min',
+      arguments: [
+        { type: 'NumericLiteral', value: 3 },
+        { type: 'NumericLiteral', value: 2 },
+        { type: 'NumericLiteral', value: 10 },
+      ],
+    };
+
+    expect(evaluate(ast)).toBe(2);
   });
 });
